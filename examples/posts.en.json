@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "slug": "hello-simpleblog",
+    "date": "2026-01-15",
+    "title": "Hello simpleblog",
+    "preview": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "tags": ["example", "lorem", "ipsum"],
+    "content": [
+      {
+        "h2": "Lorem ipsum"
+      },
+      {
+        "p": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus.\n[Read more](https://example.com)"
+      },
+      {
+        "img": "https://picsum.photos/1200/600"
+      }
+    ]
+  }
+]

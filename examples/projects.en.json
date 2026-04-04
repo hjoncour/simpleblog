@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "slug": "custom-component-demo",
+    "date": "2026-02-03",
+    "title": "Custom component demo",
+    "preview": "Lorem ipsum content with a custom component block.",
+    "tags": ["example", "component"],
+    "content": [
+      {
+        "p": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus."
+      },
+      {
+        "component": "demoCallout",
+        "props": {
+          "title": "Lorem ipsum",
+          "body": "Donec ullamcorper nulla non metus auctor fringilla."
+        },
+        "presentation": {
+          "style": {
+            "marginTop": "1.5rem"
+          }
+        }
+      }
+    ]
+  }
+]
