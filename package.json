@@ -1,0 +1,59 @@
+{
+  "name": "simpleblog",
+  "version": "0.2.0",
+  "description": "Portable collection logic and a React rich-content renderer for blogs and project showcases.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "index.d.ts",
+    "index.js",
+    "react.d.ts",
+    "react.js",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./index.js",
+  "module": "./index.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./react": {
+      "types": "./react.d.ts",
+      "import": "./react.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./index.d.ts",
+  "typesVersions": {
+    "*": {
+      "react": [
+        "react.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "dependencies": {
+    "sanitize-html": "^2.17.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/sanitize-html": "^2.16.0",
+    "typescript": "^5.9.3"
+  }
+}
