@@ -15,7 +15,7 @@ It is designed for setups like:
 npm install simpleblog
 ```
 
-`simpleblog/react` has a `react >= 18` peer dependency.
+The core package works without React. `simpleblog/react` expects `react >= 18`.
 
 ## Core Usage
 
@@ -99,3 +99,13 @@ HTML is sanitized by default. Trusted HTML is available via `htmlMode="trusted"`
 ## Examples
 
 Example JSON lives in [examples/posts.en.json](./examples/posts.en.json) and [examples/projects.en.json](./examples/projects.en.json).
+
+## Automated Releases
+
+The GitHub Actions workflow in [.github/workflows/release.yaml](./.github/workflows/release.yaml) publishes on pushes to `master` when the version in `package.json` has changed.
+
+It assumes your existing versioning flow already updates both `package.json` and `ssmver.toml`. The workflow validates that those versions match, skips publish when the version did not change, and skips republishing if that version is already on npm.
+
+To enable publishing:
+
+1. In npm package settings, add a trusted publisher for this GitHub repository and `.github/workflows/release.yaml`.

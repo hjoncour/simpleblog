@@ -1,9 +1,25 @@
 {
   "name": "simpleblog",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Portable collection logic and a React rich-content renderer for blogs and project showcases.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hjoncour/simpleblog.git"
+  },
+  "homepage": "https://github.com/hjoncour/simpleblog#readme",
+  "bugs": {
+    "url": "https://github.com/hjoncour/simpleblog/issues"
+  },
+  "keywords": [
+    "blog",
+    "content",
+    "json",
+    "react",
+    "renderer",
+    "typescript"
+  ],
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -47,6 +63,11 @@
   },
   "peerDependencies": {
     "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "sanitize-html": "^2.17.0"
