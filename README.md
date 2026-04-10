@@ -15,7 +15,7 @@ It is designed for setups like:
 npm install simpleblog
 ```
 
-`simpleblog/react` has a `react >= 18` peer dependency.
+The core package works without React. `simpleblog/react` expects `react >= 18`.
 
 ## Core Usage
 
@@ -99,3 +99,4 @@ HTML is sanitized by default. Trusted HTML is available via `htmlMode="trusted"`
 ## Examples
 
 Example JSON lives in [examples/posts.en.json](./examples/posts.en.json) and [examples/projects.en.json](./examples/projects.en.json).
+
