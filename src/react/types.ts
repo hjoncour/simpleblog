@@ -25,6 +25,7 @@ export interface RichContentTheme {
   ol?: Presentation;
   li?: Presentation;
   img?: Presentation;
+  video?: Presentation;
   gallery?: GalleryPresentation;
   component?: Presentation;
   unknown?: Presentation;
@@ -54,6 +55,22 @@ export interface ListItemObject {
 }
 
 export type ListItem = string | ListItemObject;
+
+export interface VideoBlockObject {
+  src?: string;
+  video?: string;
+  poster?: string;
+  autoplay?: boolean;
+  controls?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  playsInline?: boolean;
+  preload?: 'auto' | 'metadata' | 'none';
+  className?: string;
+  style?: StyleObject;
+}
+
+export type VideoBlock = string | VideoBlockObject;
 
 export interface RendererContext {
   resolveAsset?: (asset: string) => string;

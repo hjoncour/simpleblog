@@ -53,6 +53,24 @@ Built-in blocks can stay ad hoc:
 ]
 ```
 
+`video` takes a URL, or an object with playback options:
+
+```json
+[
+  {"video": "https://res.cloudinary.com/demo/video/upload/f_auto,q_auto/clip.mp4"},
+  {
+    "video": {
+      "src": "https://res.cloudinary.com/demo/video/upload/f_auto,q_auto/clip.mp4",
+      "poster": "https://res.cloudinary.com/demo/video/upload/so_0/clip.jpg",
+      "autoplay": true,
+      "loop": true
+    }
+  }
+]
+```
+
+`controls` defaults to `true` unless `autoplay` is set, `muted` defaults to the value of `autoplay` (browsers block unmuted autoplay), `playsInline` defaults to `true`, and `preload` defaults to `"metadata"`. `src` and `poster` both go through `resolveAsset`.
+
 `ul` and `ol` take an array of items. Items are strings, or objects with `text` plus optional `className` / `style`:
 
 ```json

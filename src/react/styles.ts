@@ -77,6 +77,15 @@ export const DEFAULT_THEME: Required<Omit<RichContentTheme, 'gallery'>> & {galle
       borderRadius: '0.5rem',
     },
   },
+  video: {
+    style: {
+      display: 'block',
+      margin: '1rem 0',
+      maxWidth: '100%',
+      height: 'auto',
+      borderRadius: '0.5rem',
+    },
+  },
   gallery: {
     wrapper: {
       style: {
