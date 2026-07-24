@@ -15,4 +15,6 @@ export type {
   RendererContext,
   RichContentRendererProps,
   RichContentTheme,
+  VideoBlock,
+  VideoBlockObject,
 } from './react/types.js';
