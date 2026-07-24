@@ -48,7 +48,21 @@ Built-in blocks can stay ad hoc:
 [
   {"h2": "Hello"},
   {"p": "Lorem ipsum dolor sit amet.\n[Read more](https://example.com)"},
+  {"ul": ["First item", "Second item with a [link](https://example.com)"]},
   {"img": "https://picsum.photos/1200/600"}
+]
+```
+
+`ul` and `ol` take an array of items. Items are strings, or objects with `text` plus optional `className` / `style`:
+
+```json
+[
+  {
+    "ol": [
+      "Plain item",
+      {"text": "Highlighted item", "style": {"fontWeight": 700}}
+    ]
+  }
 ]
 ```
 
