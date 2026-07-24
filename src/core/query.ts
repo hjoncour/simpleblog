@@ -72,9 +72,7 @@ function resolveSortValue<TEntry extends ContentEntry>(entry: TEntry, by: SortSp
   return entry[by];
 }
 
-function resolveComparator<TEntry extends ContentEntry>(
-  sort?: SortOption<TEntry>,
-): ((left: TEntry, right: TEntry) => number) | null {
+function resolveComparator<TEntry extends ContentEntry>(sort?: SortOption<TEntry>): ((left: TEntry, right: TEntry) => number) | null {
   if (!sort) {
     return null;
   }
@@ -118,10 +116,7 @@ function collectContentText(value: unknown): string[] {
   return [];
 }
 
-function resolveSearchFieldValues<TEntry extends ContentEntry>(
-  entry: TEntry,
-  field: SearchField<TEntry>,
-): string[] {
+function resolveSearchFieldValues<TEntry extends ContentEntry>(entry: TEntry, field: SearchField<TEntry>): string[] {
   if (typeof field === 'function') {
     return collectContentText(field(entry));
   }
@@ -139,11 +134,7 @@ function resolveSearchFieldValues<TEntry extends ContentEntry>(
   return collectContentText(entry[field]);
 }
 
-function matchesSearch<TEntry extends ContentEntry>(
-  entry: TEntry,
-  search: string,
-  searchFields: SearchField<TEntry>[],
-): boolean {
+function matchesSearch<TEntry extends ContentEntry>(entry: TEntry, search: string, searchFields: SearchField<TEntry>[]): boolean {
   const normalizedSearch = normalizeText(search);
   if (!normalizedSearch) {
     return true;
@@ -171,10 +162,7 @@ function matchesTags(entryTags: string[] | undefined, tags: string[], tagMode: T
   return normalizedRequestedTags.some((tag) => normalizedEntryTags.includes(tag));
 }
 
-export function sortEntries<TEntry extends ContentEntry>(
-  entries: readonly TEntry[],
-  sort?: SortOption<TEntry>,
-): TEntry[] {
+export function sortEntries<TEntry extends ContentEntry>(entries: readonly TEntry[], sort?: SortOption<TEntry>): TEntry[] {
   const comparator = resolveComparator(sort);
   if (!comparator) {
     return [...entries];
@@ -183,11 +171,7 @@ export function sortEntries<TEntry extends ContentEntry>(
   return [...entries].sort(comparator);
 }
 
-export function queryEntries<TEntry extends ContentEntry>(
-  entries: readonly TEntry[],
-  query: QueryOptions<TEntry> = {},
-  settings: QuerySettings<TEntry> = {},
-): TEntry[] {
+export function queryEntries<TEntry extends ContentEntry>(entries: readonly TEntry[], query: QueryOptions<TEntry> = {}, settings: QuerySettings<TEntry> = {}): TEntry[] {
   const searchFields = query.searchFields ?? settings.searchFields ?? (DEFAULT_SEARCH_FIELDS as SearchField<TEntry>[]);
   const tagMode = query.tagMode ?? settings.defaultTagMode ?? DEFAULT_TAG_MODE;
   const sort = query.sort ?? settings.defaultSort;

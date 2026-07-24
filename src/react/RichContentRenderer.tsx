@@ -3,18 +3,7 @@ import {renderContentBlock} from './builtins.js';
 import {mergePresentation, resolveThemePresentation} from './styles.js';
 import type {RichContentRendererProps, RendererContext} from './types.js';
 
-export function RichContentRenderer({
-  content = [],
-  components = {},
-  legacyComponents,
-  theme,
-  htmlMode = 'sanitize',
-  sanitizeOptions,
-  className,
-  style,
-  resolveAsset,
-  renderUnknown,
-}: RichContentRendererProps) {
+export function RichContentRenderer({content = [], components = {}, legacyComponents, theme, htmlMode = 'sanitize', sanitizeOptions, className, style, resolveAsset, renderUnknown}: RichContentRendererProps) {
   const context: RendererContext = {
     resolveAsset,
     htmlMode,
