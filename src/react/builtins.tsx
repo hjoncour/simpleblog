@@ -16,6 +16,7 @@ import type {
   Presentation,
   RendererContext,
   RichContentTheme,
+  VideoBlockObject,
 } from './types.js';
 
 interface RenderBlockOptions {
@@ -187,6 +188,40 @@ function renderGallery(
   );
 }
 
+function renderVideo(
+  value: unknown,
+  context: RendererContext,
+  theme: RichContentTheme | undefined,
+): React.ReactNode {
+  const descriptor: VideoBlockObject | null = typeof value === 'string' ? {src: value} : isPlainObject(value) ? (value as VideoBlockObject) : null;
+  if (!descriptor) {
+    return null;
+  }
+
+  const source = typeof descriptor.src === 'string' ? descriptor.src : typeof descriptor.video === 'string' ? descriptor.video : null;
+  if (!source) {
+    return null;
+  }
+
+  const autoPlay = descriptor.autoplay === true;
+  const presentation = mergePresentation(resolveThemePresentation(theme, 'video'), presentationFromBlock(descriptor as Record<string, unknown>));
+
+  return (
+    <video
+      autoPlay={autoPlay}
+      className={presentation?.className}
+      controls={descriptor.controls ?? !autoPlay}
+      loop={descriptor.loop === true}
+      muted={descriptor.muted ?? autoPlay}
+      playsInline={descriptor.playsInline ?? true}
+      poster={typeof descriptor.poster === 'string' ? resolveAsset(descriptor.poster, context) : undefined}
+      preload={descriptor.preload ?? 'metadata'}
+      src={resolveAsset(source, context)}
+      style={presentation?.style as React.CSSProperties | undefined}
+    />
+  );
+}
+
 function renderListItem(
   item: ListItem,
   index: number,
@@ -294,6 +329,8 @@ export function renderContentBlock({
         return <React.Fragment key={reactKey}>{renderList(value, key, context, theme)}</React.Fragment>;
       case 'img':
         return <React.Fragment key={reactKey}>{renderImage(value, context, theme)}</React.Fragment>;
+      case 'video':
+        return <React.Fragment key={reactKey}>{renderVideo(value, context, theme)}</React.Fragment>;
       case 'imgs':
         return <React.Fragment key={reactKey}>{renderGallery(value, context, theme)}</React.Fragment>;
       default:

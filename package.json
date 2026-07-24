@@ -1,6 +1,6 @@
 {
   "name": "@hjoncour/simpleblog",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Portable collection logic and a React rich-content renderer for blogs and project showcases.",
   "type": "module",
   "license": "MIT",
