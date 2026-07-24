@@ -35,11 +35,7 @@ function presentationFromBlock(block: Record<string, unknown>): Presentation | u
   return {className, style};
 }
 
-export function normalizeComponentBlock(
-  block: unknown,
-  legacyComponents: LegacyComponentRegistry | undefined,
-  context: RendererContext,
-): ComponentBlock | null {
+export function normalizeComponentBlock(block: unknown, legacyComponents: LegacyComponentRegistry | undefined, context: RendererContext): ComponentBlock | null {
   if (!isPlainObject(block)) {
     return null;
   }
@@ -81,10 +77,7 @@ export function normalizeComponentBlock(
   };
 }
 
-export function resolveRegisteredComponent(
-  registry: ComponentRegistry,
-  name: string,
-): RegisteredComponentDefinition<any> | null {
+export function resolveRegisteredComponent(registry: ComponentRegistry, name: string): RegisteredComponentDefinition<any> | null {
   const resolved = registry[name];
   if (!resolved) {
     return null;

@@ -141,16 +141,10 @@ export function mergePresentation(...values: Array<Presentation | undefined>): P
   return {className, style};
 }
 
-export function resolveThemePresentation(
-  theme: RichContentTheme | undefined,
-  slot: keyof Omit<RichContentTheme, 'gallery'>,
-): Presentation | undefined {
+export function resolveThemePresentation(theme: RichContentTheme | undefined, slot: keyof Omit<RichContentTheme, 'gallery'>): Presentation | undefined {
   return mergePresentation(DEFAULT_THEME[slot], theme?.[slot]);
 }
 
-export function resolveGalleryPresentation(
-  theme: RichContentTheme | undefined,
-  slot: keyof GalleryPresentation,
-): Presentation | undefined {
+export function resolveGalleryPresentation(theme: RichContentTheme | undefined, slot: keyof GalleryPresentation): Presentation | undefined {
   return mergePresentation(DEFAULT_THEME.gallery[slot], theme?.gallery?.[slot]);
 }

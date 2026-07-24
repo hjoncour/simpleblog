@@ -12,10 +12,7 @@ function normalizeEntryKey(value: unknown): string | null {
   return null;
 }
 
-export function getEntryKey<TEntry extends ContentEntry>(
-  entry: TEntry,
-  identity: EntryIdentityStrategy<TEntry>,
-): string | null {
+export function getEntryKey<TEntry extends ContentEntry>(entry: TEntry, identity: EntryIdentityStrategy<TEntry>): string | null {
   if (typeof identity === 'function') {
     return normalizeEntryKey(identity(entry));
   }

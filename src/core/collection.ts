@@ -13,9 +13,7 @@ import type {
 
 const DEFAULT_SORT: SortOption<ContentEntry> = {by: 'date', direction: 'desc'};
 
-function withDefaults<TEntry extends ContentEntry>(
-  config: CollectionConfig<TEntry>,
-): Required<Omit<CollectionConfig<TEntry>, 'load'>> & Pick<CollectionConfig<TEntry>, 'load'> {
+function withDefaults<TEntry extends ContentEntry>(config: CollectionConfig<TEntry>): Required<Omit<CollectionConfig<TEntry>, 'load'>> & Pick<CollectionConfig<TEntry>, 'load'> {
   const identity = (config.identity ?? 'id') as EntryIdentityStrategy<TEntry>;
   const defaultSort = (config.defaultSort ?? DEFAULT_SORT) as SortOption<TEntry>;
   const recentSort = (config.recentSort ?? defaultSort) as SortOption<TEntry>;
@@ -33,9 +31,7 @@ function withDefaults<TEntry extends ContentEntry>(
   };
 }
 
-export function createCollection<TEntry extends ContentEntry>(
-  config: CollectionConfig<TEntry>,
-): Collection<TEntry> {
+export function createCollection<TEntry extends ContentEntry>(config: CollectionConfig<TEntry>): Collection<TEntry> {
   const resolvedConfig = withDefaults(config);
 
   async function load(locale: string): Promise<TEntry[]> {

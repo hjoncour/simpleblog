@@ -22,16 +22,14 @@ jobs:
         with:
           fetch-depth: 2
 
-      # Node 24 bundles npm 11, which supports trusted publishing without
-      # the fragile global npm self-upgrade that was failing on the runner.
+      # Node 24 bundles npm 11, which supports trusted publishing without the fragile global npm self-upgrade that was failing on the runner.
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           registry-url: https://registry.npmjs.org
           cache: npm
 
-      # Trusted publishing needs npm >= 11.5.1. Node 24 normally bundles a newer
-      # npm, so only self-upgrade when the bundled one is too old.
+      # Trusted publishing needs npm >= 11.5.1. Node 24 normally bundles a newer npm, so only self-upgrade when the bundled one is too old.
       - name: Ensure npm supports trusted publishing
         run: |
           NPM_VERSION=$(npm --version)

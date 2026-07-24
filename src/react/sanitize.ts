@@ -34,11 +34,7 @@ function normalizeTextHtml(value: string): string {
   return markdownLinksToHtml(value).replace(/\n/g, '<br />');
 }
 
-export function buildHtmlPayload(
-  value: unknown,
-  mode: 'sanitize' | 'trusted',
-  options?: IOptions,
-): {__html: string} {
+export function buildHtmlPayload(value: unknown, mode: 'sanitize' | 'trusted', options?: IOptions): {__html: string} {
   const html = normalizeTextHtml(String(value ?? ''));
 
   if (mode === 'trusted') {

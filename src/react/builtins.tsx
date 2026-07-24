@@ -52,12 +52,7 @@ function presentationFromBlock(block: Record<string, unknown>): Presentation | u
   return {className, style};
 }
 
-function unknownBlock(
-  block: unknown,
-  index: number,
-  theme: RichContentTheme | undefined,
-  renderUnknown?: (block: unknown, index: number) => React.ReactNode,
-): React.ReactNode {
+function unknownBlock(block: unknown, index: number, theme: RichContentTheme | undefined, renderUnknown?: (block: unknown, index: number) => React.ReactNode): React.ReactNode {
   if (renderUnknown) {
     return renderUnknown(block, index);
   }
@@ -78,10 +73,7 @@ function resolveAsset(value: string, context: RendererContext): string {
   return context.resolveAsset ? context.resolveAsset(value) : value;
 }
 
-function normalizeImageDescriptor(
-  value: unknown,
-  context: RendererContext,
-): ImageDescriptor | null {
+function normalizeImageDescriptor(value: unknown, context: RendererContext): ImageDescriptor | null {
   if (typeof value === 'string') {
     return {
       src: resolveAsset(value, context),
@@ -108,13 +100,7 @@ function normalizeImageDescriptor(
   };
 }
 
-function renderTextElement(
-  key: string,
-  value: unknown,
-  slot: 'h1' | 'h2' | 'h3' | 'p' | 'div' | 'span',
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderTextElement(key: string, value: unknown, slot: 'h1' | 'h2' | 'h3' | 'p' | 'div' | 'span', context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const presentation = resolveThemePresentation(theme, slot);
   return React.createElement(key, {
     className: presentation?.className,
@@ -123,11 +109,7 @@ function renderTextElement(
   });
 }
 
-function renderImage(
-  value: unknown,
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderImage(value: unknown, context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const image = normalizeImageDescriptor(value, context);
   if (!image) {
     return null;
@@ -145,12 +127,7 @@ function renderImage(
   );
 }
 
-function renderGalleryItem(
-  item: GalleryItem,
-  index: number,
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderGalleryItem(item: GalleryItem, index: number, context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const image = normalizeImageDescriptor(item, context);
   if (!image) {
     return null;
@@ -169,11 +146,7 @@ function renderGalleryItem(
   );
 }
 
-function renderGallery(
-  value: unknown,
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderGallery(value: unknown, context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const items = Array.isArray(value) ? value : [];
   if (items.length === 0) {
     return null;
@@ -188,11 +161,7 @@ function renderGallery(
   );
 }
 
-function renderVideo(
-  value: unknown,
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderVideo(value: unknown, context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const descriptor: VideoBlockObject | null = typeof value === 'string' ? {src: value} : isPlainObject(value) ? (value as VideoBlockObject) : null;
   if (!descriptor) {
     return null;
@@ -222,12 +191,7 @@ function renderVideo(
   );
 }
 
-function renderListItem(
-  item: ListItem,
-  index: number,
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderListItem(item: ListItem, index: number, context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const text = typeof item === 'string' ? item : typeof item.text === 'string' ? item.text : typeof item.li === 'string' ? item.li : null;
   if (text === null) {
     return null;
@@ -246,12 +210,7 @@ function renderListItem(
   );
 }
 
-function renderList(
-  value: unknown,
-  slot: 'ul' | 'ol',
-  context: RendererContext,
-  theme: RichContentTheme | undefined,
-): React.ReactNode {
+function renderList(value: unknown, slot: 'ul' | 'ol', context: RendererContext, theme: RichContentTheme | undefined): React.ReactNode {
   const items = Array.isArray(value) ? value : [];
   if (items.length === 0) {
     return null;
@@ -265,15 +224,7 @@ function renderList(
   }, items.map((item, itemIndex) => renderListItem(item as ListItemObject | string, itemIndex, context, theme)));
 }
 
-export function renderContentBlock({
-  block,
-  index,
-  components,
-  legacyComponents,
-  theme,
-  context,
-  renderUnknown,
-}: RenderBlockOptions): React.ReactNode {
+export function renderContentBlock({block, index, components, legacyComponents, theme, context, renderUnknown}: RenderBlockOptions): React.ReactNode {
   const normalizedComponent = normalizeComponentBlock(block, legacyComponents, context);
 
   if (normalizedComponent) {
