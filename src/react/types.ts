@@ -21,6 +21,9 @@ export interface RichContentTheme {
   p?: Presentation;
   div?: Presentation;
   span?: Presentation;
+  ul?: Presentation;
+  ol?: Presentation;
+  li?: Presentation;
   img?: Presentation;
   gallery?: GalleryPresentation;
   component?: Presentation;
@@ -42,6 +45,15 @@ export interface GalleryItemObject {
 }
 
 export type GalleryItem = string | GalleryItemObject;
+
+export interface ListItemObject {
+  text?: string;
+  li?: string;
+  className?: string;
+  style?: StyleObject;
+}
+
+export type ListItem = string | ListItemObject;
 
 export interface RendererContext {
   resolveAsset?: (asset: string) => string;

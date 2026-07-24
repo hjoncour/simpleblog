@@ -11,6 +11,8 @@ import type {
   GalleryItem,
   GalleryItemObject,
   LegacyComponentRegistry,
+  ListItem,
+  ListItemObject,
   Presentation,
   RendererContext,
   RichContentTheme,
@@ -185,6 +187,49 @@ function renderGallery(
   );
 }
 
+function renderListItem(
+  item: ListItem,
+  index: number,
+  context: RendererContext,
+  theme: RichContentTheme | undefined,
+): React.ReactNode {
+  const text = typeof item === 'string' ? item : typeof item.text === 'string' ? item.text : typeof item.li === 'string' ? item.li : null;
+  if (text === null) {
+    return null;
+  }
+
+  const itemPresentation = isPlainObject(item) ? presentationFromBlock(item) : undefined;
+  const presentation = mergePresentation(resolveThemePresentation(theme, 'li'), itemPresentation);
+
+  return (
+    <li
+      className={presentation?.className}
+      dangerouslySetInnerHTML={buildHtmlPayload(text, context.htmlMode, context.sanitizeOptions)}
+      key={`list-item-${index}`}
+      style={presentation?.style as React.CSSProperties | undefined}
+    />
+  );
+}
+
+function renderList(
+  value: unknown,
+  slot: 'ul' | 'ol',
+  context: RendererContext,
+  theme: RichContentTheme | undefined,
+): React.ReactNode {
+  const items = Array.isArray(value) ? value : [];
+  if (items.length === 0) {
+    return null;
+  }
+
+  const presentation = resolveThemePresentation(theme, slot);
+
+  return React.createElement(slot, {
+    className: presentation?.className,
+    style: presentation?.style as React.CSSProperties | undefined,
+  }, items.map((item, itemIndex) => renderListItem(item as ListItemObject | string, itemIndex, context, theme)));
+}
+
 export function renderContentBlock({
   block,
   index,
@@ -244,6 +289,9 @@ export function renderContentBlock({
             {renderTextElement(key, value, key, context, theme)}
           </React.Fragment>
         );
+      case 'ul':
+      case 'ol':
+        return <React.Fragment key={reactKey}>{renderList(value, key, context, theme)}</React.Fragment>;
       case 'img':
         return <React.Fragment key={reactKey}>{renderImage(value, context, theme)}</React.Fragment>;
       case 'imgs':

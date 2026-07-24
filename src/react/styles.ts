@@ -50,6 +50,25 @@ export const DEFAULT_THEME: Required<Omit<RichContentTheme, 'gallery'>> & {galle
       whiteSpace: 'pre-wrap',
     },
   },
+  ul: {
+    style: {
+      margin: BODY_MARGIN,
+      paddingLeft: '1.25rem',
+      listStyleType: 'disc',
+    },
+  },
+  ol: {
+    style: {
+      margin: BODY_MARGIN,
+      paddingLeft: '1.25rem',
+      listStyleType: 'decimal',
+    },
+  },
+  li: {
+    style: {
+      marginBottom: '0.25rem',
+    },
+  },
   img: {
     style: {
       display: 'block',

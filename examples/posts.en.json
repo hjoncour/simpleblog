@@ -14,6 +14,13 @@
         "p": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus.\n[Read more](https://example.com)"
       },
       {
+        "ul": [
+          "Lorem ipsum, the first item",
+          "Dolor sit amet, the second item with a [link](https://example.com)",
+          {"text": "Consectetur adipiscing, an emphasized item", "style": {"fontWeight": 700}}
+        ]
+      },
+      {
         "img": "https://picsum.photos/1200/600"
       }
     ]
