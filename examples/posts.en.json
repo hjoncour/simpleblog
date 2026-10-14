@@ -21,6 +21,18 @@
         ]
       },
       {
+        "table": {
+          "caption": "Lorem ipsum per column",
+          "headers": ["Name", "Count", "Notes"],
+          "align": ["left", "right"],
+          "rows": [
+            ["Lorem", 12, "Dolor sit amet with a [link](https://example.com)"],
+            ["Ipsum", 7, {"text": "Consectetur adipiscing", "style": {"fontStyle": "italic"}}]
+          ],
+          "footer": ["Total", 19, ""]
+        }
+      },
+      {
         "img": "https://picsum.photos/1200/600"
       }
     ]

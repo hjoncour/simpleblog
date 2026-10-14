@@ -1,10 +1,12 @@
 import type {CSSProperties} from 'react';
-import type {GalleryPresentation, Presentation, RichContentTheme, StyleObject} from './types.js';
+import type {GalleryPresentation, Presentation, RichContentTheme, StyleObject, TablePresentation} from './types.js';
 
 const HEADING_MARGIN = '0 0 0.5rem';
 const BODY_MARGIN = '0 0 0.5rem';
 
-export const DEFAULT_THEME: Required<Omit<RichContentTheme, 'gallery'>> & {gallery: Required<GalleryPresentation>} = {
+const CELL_PADDING = '0.5rem 0.75rem';
+
+export const DEFAULT_THEME: Required<Omit<RichContentTheme, 'gallery' | 'table'>> & {gallery: Required<GalleryPresentation>; table: Required<TablePresentation>} = {
   root: {},
   section: {
     style: {
@@ -105,6 +107,70 @@ export const DEFAULT_THEME: Required<Omit<RichContentTheme, 'gallery'>> & {galle
       },
     },
   },
+  table: {
+    wrapper: {
+      style: {
+        margin: '1rem 0',
+        maxWidth: '100%',
+        overflowX: 'auto',
+      },
+    },
+    table: {
+      style: {
+        width: '100%',
+        borderCollapse: 'collapse',
+      },
+    },
+    caption: {
+      style: {
+        captionSide: 'bottom',
+        padding: '0.5rem 0',
+        fontSize: '0.875rem',
+        opacity: 0.75,
+      },
+    },
+    thead: {},
+    tbody: {},
+    tfoot: {},
+    tr: {},
+    th: {
+      style: {
+        padding: CELL_PADDING,
+        borderBottom: '2px solid currentColor',
+        fontWeight: 700,
+        textAlign: 'left',
+        verticalAlign: 'bottom',
+      },
+    },
+    td: {
+      style: {
+        padding: CELL_PADDING,
+        borderBottom: '1px solid rgba(128, 128, 128, 0.35)',
+        textAlign: 'left',
+        verticalAlign: 'top',
+      },
+    },
+    sortButton: {
+      style: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '0.35rem',
+        margin: 0,
+        padding: 0,
+        border: 0,
+        background: 'none',
+        color: 'inherit',
+        font: 'inherit',
+        textAlign: 'inherit',
+        cursor: 'pointer',
+      },
+    },
+    sortIndicator: {
+      style: {
+        fontSize: '0.75em',
+      },
+    },
+  },
   component: {
     style: {
       margin: '1.5rem 0',
@@ -141,10 +207,14 @@ export function mergePresentation(...values: Array<Presentation | undefined>): P
   return {className, style};
 }
 
-export function resolveThemePresentation(theme: RichContentTheme | undefined, slot: keyof Omit<RichContentTheme, 'gallery'>): Presentation | undefined {
+export function resolveThemePresentation(theme: RichContentTheme | undefined, slot: keyof Omit<RichContentTheme, 'gallery' | 'table'>): Presentation | undefined {
   return mergePresentation(DEFAULT_THEME[slot], theme?.[slot]);
 }
 
 export function resolveGalleryPresentation(theme: RichContentTheme | undefined, slot: keyof GalleryPresentation): Presentation | undefined {
   return mergePresentation(DEFAULT_THEME.gallery[slot], theme?.gallery?.[slot]);
+}
+
+export function resolveTablePresentation(theme: RichContentTheme | undefined, slot: keyof TablePresentation): Presentation | undefined {
+  return mergePresentation(DEFAULT_THEME.table[slot], theme?.table?.[slot]);
 }

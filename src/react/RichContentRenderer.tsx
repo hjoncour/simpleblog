@@ -3,8 +3,9 @@ import {renderContentBlock} from './builtins.js';
 import {mergePresentation, resolveThemePresentation} from './styles.js';
 import type {RichContentRendererProps, RendererContext} from './types.js';
 
-export function RichContentRenderer({content = [], components = {}, legacyComponents, theme, htmlMode = 'sanitize', sanitizeOptions, className, style, resolveAsset, renderUnknown}: RichContentRendererProps) {
+export function RichContentRenderer({content = [], components = {}, legacyComponents, theme, htmlMode = 'sanitize', sanitizeOptions, className, style, idPrefix = 'simpleblog', resolveAsset, renderUnknown}: RichContentRendererProps) {
   const context: RendererContext = {
+    idPrefix,
     resolveAsset,
     htmlMode,
     sanitizeOptions,
@@ -15,10 +16,11 @@ export function RichContentRenderer({content = [], components = {}, legacyCompon
   const sectionPresentation = resolveThemePresentation(theme, 'section');
 
   return (
-    <div className={rootPresentation?.className} style={rootPresentation?.style as React.CSSProperties | undefined}>
+    <div className={rootPresentation?.className} id={`${idPrefix}-root`} style={rootPresentation?.style as React.CSSProperties | undefined}>
       {content.map((block, index) => (
         <div
           className={sectionPresentation?.className}
+          id={`${idPrefix}-block-${index}`}
           key={`simpleblog-block-${index}`}
           style={sectionPresentation?.style as React.CSSProperties | undefined}
         >
