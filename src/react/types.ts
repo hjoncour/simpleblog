@@ -12,6 +12,20 @@ export interface GalleryPresentation {
   item?: Presentation;
 }
 
+export interface TablePresentation {
+  wrapper?: Presentation;
+  table?: Presentation;
+  caption?: Presentation;
+  thead?: Presentation;
+  tbody?: Presentation;
+  tfoot?: Presentation;
+  tr?: Presentation;
+  th?: Presentation;
+  td?: Presentation;
+  sortButton?: Presentation;
+  sortIndicator?: Presentation;
+}
+
 export interface RichContentTheme {
   root?: Presentation;
   section?: Presentation;
@@ -27,6 +41,7 @@ export interface RichContentTheme {
   img?: Presentation;
   video?: Presentation;
   gallery?: GalleryPresentation;
+  table?: TablePresentation;
   component?: Presentation;
   unknown?: Presentation;
 }
@@ -72,7 +87,54 @@ export interface VideoBlockObject {
 
 export type VideoBlock = string | VideoBlockObject;
 
+export type TableAlign = 'left' | 'center' | 'right';
+
+export type TableSortDirection = 'asc' | 'desc';
+
+export interface TableSort {
+  column: number;
+  direction?: TableSortDirection;
+}
+
+export interface TableCellObject {
+  text?: string | number;
+  sortValue?: string | number;
+  header?: boolean;
+  align?: TableAlign;
+  colSpan?: number;
+  rowSpan?: number;
+  className?: string;
+  style?: StyleObject;
+}
+
+export type TableCell = string | number | TableCellObject;
+
+export interface TableRowObject {
+  cells?: TableCell[];
+  className?: string;
+  style?: StyleObject;
+}
+
+export type TableRow = TableCell[] | TableRowObject;
+
+export interface TableBlockObject {
+  id?: string;
+  caption?: string;
+  headers?: TableRow;
+  rows?: TableRow[];
+  footer?: TableRow;
+  align?: TableAlign[];
+  sortable?: boolean;
+  sort?: TableSort;
+  presentation?: TablePresentation;
+  className?: string;
+  style?: StyleObject;
+}
+
+export type TableBlock = TableRow[] | TableBlockObject;
+
 export interface RendererContext {
+  idPrefix?: string;
   resolveAsset?: (asset: string) => string;
   htmlMode: 'sanitize' | 'trusted';
   sanitizeOptions?: IOptions;
@@ -107,6 +169,7 @@ export interface RichContentRendererProps {
   sanitizeOptions?: IOptions;
   className?: string;
   style?: StyleObject;
+  idPrefix?: string;
   resolveAsset?: (asset: string) => string;
   renderUnknown?: (block: unknown, index: number) => unknown;
 }

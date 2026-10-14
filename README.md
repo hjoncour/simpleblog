@@ -84,6 +84,56 @@ Built-in blocks can stay ad hoc:
 ]
 ```
 
+`table` takes an array of rows for a plain grid, or an object when it needs headers, a caption, a footer, or styling:
+
+```json
+[
+  {"table": [["Lorem", "Ipsum"], ["Dolor", "Sit"]]},
+  {
+    "table": {
+      "caption": "Lorem ipsum per column",
+      "headers": ["Name", "Count", "Notes"],
+      "align": ["left", "right"],
+      "rows": [
+        ["Lorem", 12, "Plain row with a [link](https://example.com)"],
+        {
+          "cells": [{"text": "Ipsum", "header": true}, {"text": "Spans two columns", "colSpan": 2, "style": {"fontStyle": "italic"}}],
+          "className": "highlighted-row"
+        }
+      ],
+      "footer": ["Total", 12, ""],
+      "className": "my-table",
+      "style": {"fontSize": "0.875rem"},
+      "presentation": {
+        "th": {"style": {"textTransform": "uppercase"}},
+        "td": {"className": "my-cell"}
+      }
+    }
+  }
+]
+```
+
+- `headers` and `footer` are a single row; `rows` is an array of rows. A row is an array of cells, or `{"cells": [...]}` with optional `className` / `style`.
+- A cell is a string, a number, or an object with `text` plus optional `align`, `colSpan`, `rowSpan`, `header` (renders a row header `<th>`), `className` and `style`. Cell text supports the same links and inline HTML as `p`.
+- `align` sets `left` / `center` / `right` per column; a cell's own `align` wins.
+- `className` / `style` on the table object apply to the `<table>` element. `presentation` restyles the parts of that one table: `wrapper`, `table`, `caption`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td`.
+- `sortable: true` turns the header cells into buttons that sort the body rows: ascending, descending, then back to the declared order. Values that look like numbers sort numerically, a cell's `sortValue` overrides the text used for sorting, and empty cells stay last. `sort` sets the initial order, e.g. `{"column": 1, "direction": "desc"}`. It needs a `headers` row and client-side React, and it is not meant for tables that use `rowSpan`. The buttons are styled through the `sortButton` and `sortIndicator` parts.
+- `id` overrides the generated element id of the `<table>`; its parts derive their ids from it.
+
+The same part names are available app-wide through the theme:
+
+```tsx
+const theme: RichContentTheme = {
+  table: {
+    wrapper: {className: 'my-4 overflow-x-auto'},
+    th:      {className: 'px-3 py-2 text-left font-semibold'},
+    td:      {className: 'px-3 py-2'},
+  },
+};
+```
+
+The table sits in a horizontally scrollable wrapper so wide tables do not overflow the page on small screens.
+
 Custom components use an explicit shape:
 
 ```json
@@ -123,6 +173,12 @@ Styling merges in this order:
 3. per-block `presentation` for custom components or `className` / `style` for ad hoc built-ins
 
 The renderer supports both `className` and inline `style`.
+
+For tables the order is: library defaults, `theme.table`, the table's own `presentation`, column `align`, then the row's or cell's `className` / `style`.
+
+## Element ids
+
+Every element the renderer outputs has a deterministic `id` built from the block's position: `simpleblog-root`, `simpleblog-block-3`, `simpleblog-block-3-h2`, `simpleblog-block-3-ul-item-0`, `simpleblog-block-3-table-row-1-cell-0`, and so on. Pass `idPrefix` to replace the `simpleblog` prefix, which is required to keep ids unique when more than one `RichContentRenderer` is on the same page.
 
 ## HTML Safety
 
